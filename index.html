@@ -4,68 +4,74 @@
 <!-- WebRTC enables P2P connections to other browsers -->
 
 <html>
-	<head>
-	</head>
-	<body>
-		<h1>Todo</h1>
+    <head>
+    </head>
+    <body>
+        <h1>Todo</h1>
 
-		<form id="sign">
-			<input id="alias" placeholder="username">
-			<input id="pass" type="password" placeholder="passphrase">
-			<input id="in" type="submit" value="sign in">
-			<input id="up" type="button" value="sign up">
-		</form>
+        <form id="sign">
+            <input id="alias" placeholder="username">
+            <input id="pass" type="password" placeholder="passphrase">
+            <input id="in" type="submit" value="sign in">
+            <input id="up" type="button" value="sign up">
+        </form>
 
-		<ul></ul>
+    <ul></ul>
 
-		<form id="said">
-			<input id="say">
-			<input id="speak" type="submit" value="speak">
-		</form>
-		
-		<script src="https://cdn.jsdelivr.net/npm/gun/examples/jquery.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/gun/sea.js"></script>
-		<!-- script src="https://cdn.jsdelivr.net/npm/gun/lib/webrtc.js"></script -->
-		<script>
-			/* --- LEGACY SECURITY REQUIREMENT ---
-			* 
-		        * For legacy security reasons, Browsers, Internet Firewalls, and WebRTC
-		        * wont let me directly connect to other machines unless they have a
-		        * publicly accessible IP address. To get around this WebRTC uses public
-		        * "signaling servers" to coordinate where non-IPv6 peers (like a brower)
-		        * are and then attempts to establish a P2P connection.
-		        *
-			*/
+    <form id="said">
+        <input id="say">
+        <input id="speak" type="submit" value="speak">
+    </form>
 
-			var gun = Gun(['http://localhost:8765/gun', 'https://gun-manhattan.herokuapp.com/gun']);
+    <script src="https://cdn.jsdelivr.net/npm/gun/examples/jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gun/sea.js"></script>
+    <!-- script src="https://cdn.jsdelivr.net/npm/gun/lib/webrtc.js"></script -->
+    <script>
+        /* --- LEGACY SECURITY REQUIREMENT ---
+        * 
+                * For legacy security reasons, Browsers, Internet Firewalls, and WebRTC
+                * wont let me directly connect to other machines unless they have a
+                * publicly accessible IP address. To get around this WebRTC uses public
+                * "signaling servers" to coordinate where non-IPv6 peers (like a brower)
+                * are and then attempts to establish a P2P connection.
+                *
+        */
 
-			/* --- P2P COMMUNICATION ---
-			*
-		        * GUN uses "relay peers" to automatically perform the function of a "signaling server"
-		        * they can also be fully decentralized. Even if a direct connection is not formed
-		        * to the ideal peer, DAM (Daisy-chain Ad-hoc Mesh-network) is able to relay
-		        * messages to indirect peers. (DAM is a networking algorithm.)
-		        * 
-		        * Heroku is used for deployment.
-		        *
-			*/
+        var gun = Gun(['http://localhost:8765/gun', 'https://gun-manhattan.herokuapp.com/gun']);
 
-			/* --- RUN GUN LOCALLY ---
-		        *
-		        * Run GUN locally with a npm package. Execute "npm start" in the gun module directory.
-		        * 
-		        */
+        /* --- P2P COMMUNICATION ---
+        *
+                * GUN uses "relay peers" to automatically perform the function of a "signaling server"
+                * they can also be fully decentralized. Even if a direct connection is not formed
+                * to the ideal peer, DAM (Daisy-chain Ad-hoc Mesh-network) is able to relay
+                * messages to indirect peers. (DAM is a networking algorithm.)
+                * 
+                * Heroku is used for deployment.
+                *
+        */
 
-			/* --- DATA STORAGE ---
-		        *
-		        * Some blockchain like enviroments require their peers to store all shared data
-		        * but GUN peers can get away with only storing some of the shared data.
-		        *
-		        * Data for browers is stored in localStorage by default but an indexedDB adapter exists using RAD.
-		        *
-		        * RAD uses fs to dump to the disk. Other plugins like AWS S3 and more exists as alternatives.
-		        */
-		</script>
-	</body>
+        /* --- RUN GUN LOCALLY ---
+                *
+                * Run GUN locally with a npm package. Execute "npm start" in the gun module directory.
+                * 
+                */
+
+        /* --- DATA STORAGE ---
+                *
+                * Some blockchain like enviroments require their peers to store all shared data
+                * but GUN peers can get away with only storing some of the shared data.
+                *
+                * Data for browers is stored in localStorage by default but an indexedDB adapter exists using RAD.
+                *
+                * RAD uses fs to dump to the disk. Other plugins like AWS S3 and more exists as alternatives.
+                */
+
+        var user = gun.user();
+
+        $('#up').on('click', function(a){
+        user.create($('#alias').val(), $(''))
+        });
+    </script>
+    </body>
 </html>
